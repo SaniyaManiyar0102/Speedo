@@ -1,0 +1,356 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>SpeedO</title>
+
+  <link rel="icon" href="SpeedO.webp" type="image/gif" sizes="16x16">
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css">
+  <!-- Animate.css -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.css">
+  <style>
+    .head {
+      height: 500px;
+      background-image: url("1644974880_wallpaper.jpg");
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center center;
+      margin-bottom: 30px;
+    }
+
+    .head h1 {
+      padding-top: 30px;
+      padding-left: 10px;
+      display: inline-block;
+      color: white;
+    }
+
+    .head p {
+      font-size: 28px;
+      padding-left: 13px;
+      color: white;
+    }
+
+    .location {
+      margin-right: 30px;
+      margin-top: 30px;
+      display: inline-block;
+    }
+
+    .logo {
+      margin-top: 15px;
+      margin-bottom: 15px;
+    }
+
+    .footicon {
+      float: right;
+      display: inline-block;
+      padding-right: 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="landing.html">
+      <img src="SpeedO.webp" width="30" height="30" class="d-inline-block align-top">
+      <strong>SpeedO</strong>
+    </a>
+
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item active"><a class="nav-link" href="home1.html"><i class="fas fa-home"></i> <strong>HOME</strong></a></li>
+        <li class="nav-item"><a class="nav-link" href="profile"><i class="fas fa-user"></i> <strong>PROFILE</strong></a></li>
+        <li class="nav-item"><a class="nav-link" href="booking.html"><i class="fas fa-car"></i> <strong>BOOK CAB</strong></a></li>
+        <li class="nav-item"><a class="nav-link" href="aboutUs.html"><i class="fas fa-globe"></i> <strong>ABOUT</strong></a></li>
+        <li class="nav-item"><a class="nav-link" href="review.html"><i class="fas fa-comments"></i> <strong>REVIEW</strong></a></li>
+      </ul>
+    </div>
+  </nav>
+
+
+    <title>Book Cab</title>
+
+    <style type="text/css">
+      .fare {
+        width: 50%;
+      }
+      .form-check {
+        margin: 20px;
+      }
+      .controls {
+        display: none;
+      }
+      #map {
+        height: 100%;
+        width: 100%;
+      }
+    </style>
+
+  </head>
+  <body>
+
+    <div class="jumbotron jumbotron-fluid">
+      <div class="container">
+        <h1 class="display-4">Book Your Ride <img src="SpeedO.webp" class="rounded float-right fadeInDown animated" style="width: 100px; height: 100px;"></h1><br>
+        <hr>
+
+        <div class="card" style="margin-top: 30px;">
+          <div class="card-body">
+            <form id="booking-form">
+              <div class="form-row">
+                <div class="form-group col-md-6">
+                  <label for="pickup">Enter Pickup</label>
+                  <input type="text" class="form-control" id="pickup" placeholder="Pickup">
+                </div>
+                <div class="form-group col-md-6">
+                  <label for="destination">Enter Destination</label>
+                  <input type="text" class="form-control" id="destination" placeholder="Destination">
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group col-md-6">
+                  <label for="city">City</label>
+                  <input type="text" class="form-control" id="city">
+                </div>
+                <div class="form-group col-md-4">
+                  <label for="state">State</label>
+                  <select id="state" class="form-control">
+                    <option selected>Choose...</option>
+                    <option>Andhra Pradesh</option>
+                    <option>Arunachal Pradesh</option>
+                    <option>Assam</option>
+                    <option>Maharshtra</option>
+                    <!-- Add other states here -->
+                  </select>
+                </div>
+                <div class="form-group col-md-2">
+                  <label for="zip">Pin</label>
+                  <input type="text" class="form-control" id="zip">
+                </div>
+              </div>
+            </form>
+
+            <p>Choose Your Ride:</p>
+            <div class="container">
+              <div class="row">
+                <div class="col-md-2"><a href=""><img src="cab1.JPG" class="rounded float-left"></a></div>
+                <div class="col-md-2"><a href=""><img src="cab2.JPG" class="rounded float-left"></a></div>
+                <div class="col-md-2"><a href=""><img src="cab3.JPG" class="rounded float-left"></a></div>
+                <div class="col-md-2"><a href=""><img src="cab4.JPG" class="rounded float-left"></a></div>
+              </div>
+            </div>
+
+            <button type="button" id="bookRideBtn" class="btn btn-primary" style="margin-top: 50px;">Book Ride</button>
+
+
+          </div>
+        </div>
+
+        <!-- Fare Estimator -->
+
+        <div class="container">
+          <div class="row">
+            <div class="col-sm-6">
+              <div class="card" style="margin-top: 30px;">
+                <div class="card-header"><h4><i class="fas fa-percent"></i> Fare Estimator</h4></div>
+                <div class="card-body">
+                  <form id="fare-form">
+                    <div class="form-row">
+                      <div class="form-group col-md-12">
+                        <label><i class="fas fa-circle" style="color: green;"></i> Enter Pickup</label>
+                        <input type="text" class="form-control" id="origin-input" placeholder="Pickup">
+                      </div>
+                      <div class="form-group col-md-12">
+                        <label><i class="fas fa-circle" style="color: red;"></i> Enter Destination</label>
+                        <input type="text" class="form-control" id="destination-input" placeholder="Destination">
+                      </div>
+                    </div>
+
+                    <div class="form-row">
+                      <div class="form-group col-md-12">
+                        <label for="car-type">Select Car Type</label>
+                        <select id="car-type" class="form-control">
+                          <option value="radio">Radio Taxi</option>
+                          <option value="sedan">Sedan</option>
+                          <option value="hatchback">Hatchback</option>
+                          <option value="suv">SUV</option>
+                        </select>
+                      </div>                      
+                    </div>
+                      
+                    <button type="button" class="btn btn-primary btn-lg btn-block" style="border-radius: 0;" onclick="calculateFare()">Calculate Fare</button>
+                  </form>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-sm-6">
+              <div class="card" style="margin-top: 30px;">
+                <div class="card-body" style="margin: 0;">
+                  <div id="map" style="width: 480px; height: 550px;"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Fare Estimator Ends Here -->
+
+      </div>
+    </div>
+
+    <!-- Footer Starts-->
+    <div class="jumbotron jumbotron-fluid" style="background-color: #282C35; color: white;">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-4">
+            <h5>Popular Routes</h5>
+          </div>
+          <div class="col-md-4">
+            <div class="list-group">
+              <h5>Our Popular Cab Bookings</h5>
+              <p><a href="#" style="text-decoration: none;" class="text-light">Pune to Mumbai Outstation Cabs</a></p>
+              <p><a href="#" style="text-decoration: none;" class="text-light">Pune to Agra Outstation Cabs</a></p>
+              <p><a href="#" style="text-decoration: none;" class="text-light">Pune to Delhi Outstation Cabs</a></p>
+            </div>
+          </div>
+          <!-- Image Column -->
+          <div class="col-md-4">
+            <img src="map-gif.jpg" alt="Cab Booking Map Route" class="img-fluid rounded" style="max-height: 400px;">
+          </div>
+        </div>
+        <hr>
+      </div>
+    </div>
+
+    <div class="last">
+      &copy; SpeedO 2025. All Rights Reserved.
+      <div class="footicon" style="margin-bottom: 10px;">
+        <a href="https://www.facebook.com/profile.php?id=100012159498460"><i style="font-size:28px; margin-right: 10px;" class="fa">&#xf082;</i></a>
+        <a href=""><i style="font-size:28px; margin-right: 10px;" class="fa">&#xf099;</i></a>
+        <a href=""><i style="font-size:28px;" class="fa">&#xf09b;</i></a>
+      </div>
+    </div>
+
+    <!-- Optional JavaScript -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIKb4QJdG2B3G6YQpsIKXj6l5+h2d6Ju2zWbY7kX4PFF1pQjBx5Ak" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtvNjsFf5kMbeE+3bCx5DRbIN2XryhZbDksk1zvR+qPrU1sdV0nk" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQd3fF1pzUikW1yTSXpDA6zJJ6kpQd4oBf7VqV" crossorigin="anonymous"></script>
+    
+    <script>
+      function calculateFare() {
+        const distance = 25; // Replace with actual distance from Maps API or calculation logic
+    
+        // Define base fares and rates per KM
+        const fareRates = {
+          radio: { baseFare: 40, rate: 12 },
+          sedan: { baseFare: 50, rate: 14 },
+          hatchback: { baseFare: 30, rate: 10 },
+          suv: { baseFare: 70, rate: 18 }
+        };
+    
+        const carType = document.getElementById('car-type').value;
+        const selectedFare = fareRates[carType];
+    
+        if (!selectedFare) {
+          alert("Please select a valid car type.");
+          return;
+        }
+    
+        const fare = selectedFare.baseFare + (selectedFare.rate * distance);
+        const carName = document.getElementById('car-type').options[document.getElementById('car-type').selectedIndex].text;
+    
+        alert(`The estimated fare for a ${carName} is ₹${fare.toFixed(2)} for ${distance} km.`);
+      }
+    </script>
+    
+<!-- Optional JavaScript -->
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+<!-- Google Maps API (Replace `YOUR_API_KEY` with your actual API key) -->
+<script async defer
+  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCwOFzXZvsFJjZGecznJoZ8kVflqvUO-Hs&callback=initMap">
+</script>
+
+<script>
+  function initMap() {
+    const defaultLocation = { lat: 18.5204, lng: 73.8567 }; // Pune as default
+    const map = new google.maps.Map(document.getElementById("map"), {
+      zoom: 12,
+      center: defaultLocation,
+    });
+
+    const marker = new google.maps.Marker({
+      position: defaultLocation,
+      map: map,
+      title: "Your Location"
+    });
+  }
+
+  function calculateFare() {
+    const distance = 25; // Replace with actual distance from Maps API or calculation logic
+
+    const fareRates = {
+      radio: { baseFare: 40, rate: 12 },
+      sedan: { baseFare: 50, rate: 14 },
+      hatchback: { baseFare: 30, rate: 10 },
+      suv: { baseFare: 70, rate: 18 }
+    };
+
+    const carType = document.getElementById('car-type').value;
+    const selectedFare = fareRates[carType];
+
+    if (!selectedFare) {
+      alert("Please select a valid car type.");
+      return;
+    }
+
+    const fare = selectedFare.baseFare + (selectedFare.rate * distance);
+    const carName = document.getElementById('car-type').options[document.getElementById('car-type').selectedIndex].text;
+
+    alert(`The estimated fare for a ${carName} is ₹${fare.toFixed(2)} for ${distance} km.`);
+  }
+</script>
+<!-- Booking Success Modal -->
+<div class="modal fade" id="bookingSuccessModal" tabindex="-1" role="dialog" aria-labelledby="bookingSuccessModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header bg-success text-white">
+        <h5 class="modal-title" id="bookingSuccessModalLabel">Booking Confirmed</h5>
+        <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Your ride has been booked successfully!
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">OK</button>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    document.getElementById('bookRideBtn').addEventListener('click', function () {
+      // You can add form validation logic here if needed
+      $('#bookingSuccessModal').modal('show');
+    });
+  });
+</script>
+
+  </body>
+</html>
