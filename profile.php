@@ -1,14 +1,96 @@
 <?php
-
 session_start();
-if(isset($_SESSION['username'])){
-	if($_SESSION['flag']==2){
-		include 'newprofiledriver.php';
-	}else{
-		include 'newprofilecustomer.php';
-	}
+include 'db_connect.php';
+
+// Optional: Protect page so only logged-in users can view
+if (!isset($_SESSION['username'])) {
+    header("Location: login.html");
+    exit();
 }
 
-
-
+// Fetch all users from database
+$sql = "SELECT fullname, email, username FROM users ORDER BY id DESC";
+$result = $conn->query($sql);
 ?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>SpeedO - Profiles</title>
+  
+    <link rel="icon" href="SpeedO.webp" type="image/gif" sizes="16x16">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+
+    <style>
+        .card { max-width: 400px; width: 100%; margin: 10px; }
+        .head { height: 500px; background-image: url("1644974880_wallpaper.jpg"); background-size: cover; margin-bottom: 30px; }
+        .footicon { float: right; display: inline-block; padding-right: 20px; }
+    </style>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="home1.php">
+        <img src="SpeedO.webp" width="30" height="30" class="d-inline-block align-top">
+        <strong>SpeedO</strong>
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item"><a class="nav-link" href="home1.php"><i class="fas fa-home"></i> <strong>HOME</strong></a></li>
+          <li class="nav-item active"><a class="nav-link" href="profile.php"><i class="fas fa-user"></i> <strong>PROFILE</strong></a></li>
+          <li class="nav-item"><a class="nav-link" href="logout.php"><i class="fas fa-sign-out-alt"></i> <strong>LOGOUT</strong></a></li>
+        </ul>
+    </div>
+</nav>
+
+<!-- Profile Section -->
+<div class="container mt-4">
+  <h2 class="mb-4 text-center">User Profiles</h2>
+  <div class="row justify-content-center">
+
+    <?php
+    if ($result->num_rows > 0) {
+        while($row = $result->fetch_assoc()) {
+            ?>
+            <div class="card">
+              <div class="card-header">
+                <i class="fas fa-user-circle"></i> Profile Details
+              </div>
+              <div class="card-body">
+                <div class="row"><div class="col-4"><strong>Name:</strong></div><div class="col-8"><?php echo $row['fullname']; ?></div></div>
+                <div class="row"><div class="col-4"><strong>Email:</strong></div><div class="col-8"><?php echo $row['email']; ?></div></div>
+                <div class="row"><div class="col-4"><strong>Username:</strong></div><div class="col-8"><?php echo $row['username']; ?></div></div>
+                <div class="text-center mt-3">
+                  <a href="edit-profile.php?username=<?php echo $row['username']; ?>" class="btn btn-warning">Edit Profile</a>
+                </div>
+              </div>
+            </div>
+            <?php
+        }
+    } else {
+        echo "<p class='text-center'>No users found.</p>";
+    }
+    ?>
+
+  </div>
+</div>
+
+<!-- Footer -->
+<footer class="bg-light py-3 mt-5">
+  <div class="container text-center">
+    <p>&copy; SpeedO 2025. All Rights Reserved.</p>
+  </div>
+</footer>
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+</body>
+</html>

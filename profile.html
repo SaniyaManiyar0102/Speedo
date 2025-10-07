@@ -1,191 +1,96 @@
+<?php
+session_start();
+include 'db_connect.php';
+
+// Optional: Protect page so only logged-in users can view
+if (!isset($_SESSION['username'])) {
+    header("Location: login.html");
+    exit();
+}
+
+// Fetch all users from database
+$sql = "SELECT fullname, email, username FROM users ORDER BY id DESC";
+$result = $conn->query($sql);
+?>
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <title>SpeedO</title>
-      
-        <link rel="icon" href="SpeedO.webp" type="image/gif" sizes="16x16">
-      
-        <!-- Bootstrap CSS -->
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-        <!-- Font Awesome -->
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css">
-        <!-- Animate.css -->
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.css">
-      
-        <style>
-          .head {
-            height: 500px;
-            background-image: url("1644974880_wallpaper.jpg");
-            background-size: cover;
-            background-repeat: no-repeat;
-            background-position: center center;
-            margin-bottom: 30px;
-          }
-      
-          .head h1 {
-            padding-top: 30px;
-            padding-left: 10px;
-            display: inline-block;
-            color: white;
-          }
-      
-          .head p {
-            font-size: 28px;
-            padding-left: 13px;
-            color: white;
-          }
-      
-          .location {
-            margin-right: 30px;
-            margin-top: 30px;
-            display: inline-block;
-          }
-      
-          .logo {
-            margin-top: 15px;
-            margin-bottom: 15px;
-          }
-      
-          .footicon {
-            float: right;
-            display: inline-block;
-            padding-right: 20px;
-          }
-        </style>
-      </head>
-</head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>SpeedO - Profiles</title>
+  
+    <link rel="icon" href="SpeedO.webp" type="image/gif" sizes="16x16">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
 
+    <style>
+        .card { max-width: 400px; width: 100%; margin: 10px; }
+        .head { height: 500px; background-image: url("1644974880_wallpaper.jpg"); background-size: cover; margin-bottom: 30px; }
+        .footicon { float: right; display: inline-block; padding-right: 20px; }
+    </style>
+</head>
 <body>
 
-  <!-- Navbar -->
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand" href="landing.html">
-      <img src="SpeedO.webp" width="30" height="30" class="d-inline-block align-top">
-      <strong>SpeedO</strong>
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="home1.php">
+        <img src="SpeedO.webp" width="30" height="30" class="d-inline-block align-top">
+        <strong>SpeedO</strong>
     </a>
-
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
       <span class="navbar-toggler-icon"></span>
-    </button
-    <div
-     class="collapse navbar-collapse" id="navbarSupportedContent">
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
-          <li class="nav-item active"><a class="nav-link" href="home1.html"><i class="fas fa-home"></i> <strong>HOME</strong></a></li>
-          <li class="nav-item"><a class="nav-link" href="profile.html"><i class="fas fa-user"></i> <strong>PROFILE</strong></a></li>
-          <li class="nav-item"><a class="nav-link" href="logout.php"><i class="fas fa-user"></i> <strong>LOGOUT</strong></a></li>
+          <li class="nav-item"><a class="nav-link" href="home1.php"><i class="fas fa-home"></i> <strong>HOME</strong></a></li>
+          <li class="nav-item active"><a class="nav-link" href="profile.php"><i class="fas fa-user"></i> <strong>PROFILE</strong></a></li>
+          <li class="nav-item"><a class="nav-link" href="logout.php"><i class="fas fa-sign-out-alt"></i> <strong>LOGOUT</strong></a></li>
         </ul>
-   </div>
-   </nav>
+    </div>
+</nav>
 
- <!-- Profile Section -->
-<div class="container mt-4" id="profile-section">
+<!-- Profile Section -->
+<div class="container mt-4">
   <h2 class="mb-4 text-center">User Profiles</h2>
-
   <div class="row justify-content-center">
 
-    <!-- Profile Card 1 -->
-    <div class="card m-3" style="max-width: 400px; width: 100%;">
-      <div class="card-header">
-        <i class="fas fa-user-circle"></i> Profile Details
-      </div>
-      <div class="card-body">
-        <div class="row">
-          <div class="col-4"><strong>Name:</strong></div>
-          <div class="col-8"><p id="user-name-1">Saniya Maniyar</p></div>
-        </div>
-        <div class="row">
-          <div class="col-4"><strong>Email:</strong></div>
-          <div class="col-8"><p id="user-email-1">saniya.maniyar@gmail.com</p></div>
-        </div>
-        <div class="row">
-          <div class="col-4"><strong>Phone:</strong></div>
-          <div class="col-8"><p id="user-phone-1">+91 1234567899</p></div>
-        </div>
-        <div class="row">
-          <div class="col-4"><strong>Address:</strong></div>
-          <div class="col-8"><p id="user-address-1">Pradhikaran, Nigdi, Pimpri Chinchwad</p></div>
-        </div>
-        <div class="text-center mt-3">
-          <a href="edit-profile.html" class="btn btn-warning">Edit Profile</a>
-        </div>
-      </div>
-    </div>
-
-    <!-- Profile Card 2 -->
-    <div class="card m-3" style="max-width: 400px; width: 100%;">
-      <div class="card-header">
-        <i class="fas fa-user-circle"></i> Profile Details
-      </div>
-      <div class="card-body">
-        <div class="row">
-          <div class="col-4"><strong>Name:</strong></div>
-          <div class="col-8"><p id="user-name-2">Mukta Mahamuni</p></div>
-        </div>
-        <div class="row">
-          <div class="col-4"><strong>Email:</strong></div>
-          <div class="col-8"><p id="user-email-2">mukta.mahamuni@gmail.com</p></div>
-        </div>
-        <div class="row">
-          <div class="col-4"><strong>Phone:</strong></div>
-          <div class="col-8"><p id="user-phone-2">+91 9876543210</p></div>
-        </div>
-        <div class="row">
-          <div class="col-4"><strong>Address:</strong></div>
-          <div class="col-8"><p id="user-address-2">Akurdi, Pune</p></div>
-        </div>
-        <div class="text-center mt-3">
-          <a href="edit-profile.html" class="btn btn-warning">Edit Profile</a>
-        </div>
-      </div>
-    </div>
-
-    <!-- Profile Card 3 -->
-    <div class="card m-3" style="max-width: 400px; width: 100%;">
-      <div class="card-header">
-        <i class="fas fa-user-circle"></i> Profile Details
-      </div>
-      <div class="card-body">
-        <div class="row">
-          <div class="col-4"><strong>Name:</strong></div>
-          <div class="col-8"><p id="user-name-3">Kiran Mane</p></div>
-        </div>
-        <div class="row">
-          <div class="col-4"><strong>Email:</strong></div>
-          <div class="col-8"><p id="user-email-3">kiran.mane@gmail.com</p></div>
-        </div>
-        <div class="row">
-          <div class="col-4"><strong>Phone:</strong></div>
-          <div class="col-8"><p id="user-phone-3">+91 9988776655</p></div>
-        </div>
-        <div class="row">
-          <div class="col-4"><strong>Address:</strong></div>
-          <div class="col-8"><p id="user-address-3">Kothrud, Pune</p></div>
-        </div>
-        <div class="text-center mt-3">
-          <a href="edit-profile.html" class="btn btn-warning">Edit Profile</a>
-        </div>
-      </div>
-    </div>
+    <?php
+    if ($result->num_rows > 0) {
+        while($row = $result->fetch_assoc()) {
+            ?>
+            <div class="card">
+              <div class="card-header">
+                <i class="fas fa-user-circle"></i> Profile Details
+              </div>
+              <div class="card-body">
+                <div class="row"><div class="col-4"><strong>Name:</strong></div><div class="col-8"><?php echo $row['fullname']; ?></div></div>
+                <div class="row"><div class="col-4"><strong>Email:</strong></div><div class="col-8"><?php echo $row['email']; ?></div></div>
+                <div class="row"><div class="col-4"><strong>Username:</strong></div><div class="col-8"><?php echo $row['username']; ?></div></div>
+                <div class="text-center mt-3">
+                  <a href="edit-profile.html?username=<?php echo $row['username']; ?>" class="btn btn-warning">Edit Profile</a>
+                </div>
+              </div>
+            </div>
+            <?php
+        }
+    } else {
+        echo "<p class='text-center'>No users found.</p>";
+    }
+    ?>
 
   </div>
 </div>
 
-  <!-- Footer Section -->
-  <footer class="bg-light py-3 mt-5">
-    <div class="container text-center">
-      <p>&copy; SpeedO 2025. All Rights Reserved.</p>
-    </div>
-  </footer>
+<!-- Footer -->
+<footer class="bg-light py-3 mt-5">
+  <div class="container text-center">
+    <p>&copy; SpeedO 2025. All Rights Reserved.</p>
+  </div>
+</footer>
 
-  <!-- Bootstrap JS & jQuery -->
-  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-  
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 </body>
-
 </html>

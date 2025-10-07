@@ -1,8 +1,11 @@
 <?php
 session_start();
-unset($_SESSION["username"]) ;
-unset($_SESSION["flag"]);
-unset($_SESSION['name']);
-unset($_SESSION['img']);
-header("location: home1.html");
+
+// Destroy all session data
+session_unset();
+session_destroy();
+
+// Redirect to login page
+header("Location: login.html");
+exit();
 ?>

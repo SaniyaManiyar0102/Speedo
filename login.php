@@ -1,41 +1,31 @@
 <?php
-include 'connection.php';
+include 'db_connect.php';
+session_start();
 
-if (isset($_POST['submit'])) {
-    $email = $_POST['email'];
-    $pas = $_POST['password'];
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $username = $_POST['username'];
+    $password = $_POST['password'];
 
-    // Check in customer table
-    $sql = "SELECT * FROM customer WHERE email='$email' AND password='$pas'";
-    $result = mysqli_query($conn, $sql);
+    // Check if user exists
+    $stmt = $conn->prepare("SELECT * FROM users WHERE username=? OR email=?");
+    $stmt->bind_param("ss", $username, $username);
+    $stmt->execute();
+    $result = $stmt->get_result();
 
-    if (mysqli_num_rows($result) > 0) {
-        $row = mysqli_fetch_assoc($result);
-        session_start();
-        $_SESSION["flag"] = 1;
-        $_SESSION["username"] = $row["email"];
-        $_SESSION["userid"] = $row["userid"];
-        $_SESSION["name"] = $row["name"];
-        $_SESSION["img"] = $row["image"];
-        echo "<script>window.open('home1.php', '_self');</script>";
-    } else {
-        // Check in driver table
-        $sql = "SELECT * FROM driver WHERE email='$email' AND password='$pas'";
-        $result = mysqli_query($conn, $sql);
+    if ($result->num_rows === 1) {
+        $row = $result->fetch_assoc();
 
-        if (mysqli_num_rows($result) > 0) {
-            $row = mysqli_fetch_assoc($result);
-            session_start();
-            $_SESSION["flag"] = 2;
-            $_SESSION["username"] = $row["email"];
-            $_SESSION["name"] = $row["name"];
-            $_SESSION["img"] = $row["image"];
-            echo "<script>window.open('home1.php', '_self');</script>";
+        // Verify password
+        if (password_verify($password, $row['password'])) {
+            $_SESSION['username'] = $row['username'];
+            $_SESSION['fullname'] = $row['fullname'];
+            header("Location: home1.php");
+            exit();
         } else {
-            echo "<script>alert('Please enter valid email or password...'); window.open('home1.php', '_self');</script>";
+            echo "<script>alert('Incorrect password.'); window.location='login.html';</script>";
         }
+    } else {
+        echo "<script>alert('User not found. Please register first.'); window.location='register.html';</script>";
     }
-
-    mysqli_close($conn);
 }
 ?>
