@@ -61,7 +61,7 @@ SpeedO/
 1. **Install XAMPP** and start Apache & MySQL.
 2. **Copy the SpeedO folder** to `c:\xampp\htdocs\`.
 3. **Import the database** (if provided) using phpMyAdmin.
-4. **Open** [http://localhost/SpeedO/home1.html](http://localhost/SpeedO/home1.html) in your browser.
+4. **Open** [http://localhost/SpeedO/home1.html](http://localhost/SpeedO/landing.html) in your browser.
 
 ---
 
